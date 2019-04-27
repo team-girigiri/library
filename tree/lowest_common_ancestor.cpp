@@ -1,4 +1,4 @@
-template<typename T>
+template <typename T>
 struct SparseTable {
     vector<vector<T>> st;
     vector<int> lookup;
@@ -47,7 +47,13 @@ struct LCA {
         }
     }
 
-    LCA(const vector<vector<int>> &adj) : n(adj.size()), adj(adj), vs(2 * adj.size() - 1), depth(2 * adj.size() - 1), id(adj.size()), D(adj.size()) {
+    LCA(const vector<vector<int>> &adj)
+        : n(adj.size()),
+          adj(adj),
+          vs(2 * adj.size() - 1),
+          depth(2 * adj.size() - 1),
+          id(adj.size()),
+          D(adj.size()) {
         dfs(0, -1, 0);
         vector<pair<int, int>> ds;
         for (int i = 0; i < depth.size(); i++) {
@@ -60,7 +66,5 @@ struct LCA {
         return vs[st->query(min(id[u], id[v]), max(id[u], id[v]) + 1).second];
     }
 
-    int dist(int u, int v) {
-        return D[u] + D[v] - 2 * D[lca(u, v)];
-    }
+    int dist(int u, int v) { return D[u] + D[v] - 2 * D[lca(u, v)]; }
 };
