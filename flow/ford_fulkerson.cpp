@@ -25,7 +25,7 @@ class FordFulkerson {
         return 0;
     }
 
-   public:
+public:
     FordFulkerson(int n) : n(n), G(n), used(n) {}
 
     void add_edge(int from, int to, int cap) {

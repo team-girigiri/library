@@ -1,7 +1,7 @@
 class xorshift {
     unsigned long long x;
 
-   public:
+public:
     xorshift() {
         mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
         x = rnd();
@@ -170,17 +170,14 @@ class ImplicitTreap {
                 if (t->l && Monoid::op(t->l->acc, x) != x) {
                     return find(t->l, x, offset, left);
                 } else {
-                    return (Monoid::op(t->value, x) != x)
-                               ? offset + cnt(t->l)
-                               : find(t->r, x, offset + cnt(t->l) + 1, left);
+                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l)
+                                                          : find(t->r, x, offset + cnt(t->l) + 1, left);
                 }
             } else {
                 if (t->r && Monoid::op(t->r->acc, x) != x) {
                     return find(t->r, x, offset + cnt(t->l) + 1, left);
                 } else {
-                    return (Monoid::op(t->value, x) != x)
-                               ? offset + cnt(t->l)
-                               : find(t->l, x, offset, left);
+                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->l, x, offset, left);
                 }
             }
         }
@@ -211,7 +208,7 @@ class ImplicitTreap {
         dump(t->r);
     }
 
-   public:
+public:
     ImplicitTreap() {}
 
     ImplicitTreap(vector<T> as) {

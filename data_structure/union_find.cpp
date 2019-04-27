@@ -2,9 +2,7 @@ struct UnionFind {
     int n, cnt;
     vector<int> par, rank, sz;
 
-    UnionFind(int n) : n(n), cnt(n), par(n), rank(n), sz(n, 1) {
-        iota(par.begin(), par.end(), 0);
-    }
+    UnionFind(int n) : n(n), cnt(n), par(n), rank(n), sz(n, 1) { iota(par.begin(), par.end(), 0); }
 
     int find(int x) {
         if (x == par[x]) return x;

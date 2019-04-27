@@ -1,5 +1,4 @@
-vector<bool> maximalIndependentSet(const vector<vector<int>> &adj,
-                                   const int limit = 1000) {
+vector<bool> maximalIndependentSet(const vector<vector<int>> &adj, const int limit = 1000) {
     mt19937 rnd(chrono::system_clock::now().time_since_epoch().count());
     int n = adj.size();
     vector<int> pm(n);
@@ -16,9 +15,7 @@ vector<bool> maximalIndependentSet(const vector<vector<int>> &adj,
         cnt++;
         if (cnt >> 10 & 1) {
             auto now = chrono::system_clock::now();
-            if (chrono::duration_cast<chrono::milliseconds>(now - start)
-                    .count() > limit)
-                break;
+            if (chrono::duration_cast<chrono::milliseconds>(now - start).count() > limit) break;
         }
 
         vector<bool> tmp(n);

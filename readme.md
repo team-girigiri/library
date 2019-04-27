@@ -1,6 +1,10 @@
 # ライブラリの追加規則
 - ファイル名は `snake_case.cpp`
 - アルゴリズムの説明・verify問題・使用方法などを対応するフォルダの `readme.md` に記載
+- clang-formatでフォーマット
+  ```bash
+  $ clang-format -style=file -i <ファイルへのパス(*/*.cppで全てのファイル)>
+  ```
 
 ## readme.mdの例
 

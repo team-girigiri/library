@@ -5,12 +5,7 @@ struct Hungarian {
     vector<int> fx, fy, x, y;
 
     Hungarian(const vector<vector<int>> &mat)
-        : n(mat.size()),
-          mat(mat),
-          fx(mat.size(), INF),
-          fy(mat.size()),
-          x(mat.size(), -1),
-          y(mat.size(), -1) {}
+        : n(mat.size()), mat(mat), fx(mat.size(), INF), fy(mat.size()), x(mat.size(), -1), y(mat.size(), -1) {}
 
     int run() {
         for (int i = 0; i < n; i++) {
