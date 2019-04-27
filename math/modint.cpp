@@ -1,4 +1,4 @@
-template<typename T>
+template <typename T>
 T pow(T a, long long n, T e = 1) {
     T ret = e;
     while (n) {
@@ -9,11 +9,13 @@ T pow(T a, long long n, T e = 1) {
     return ret;
 }
 
-template<int mod>
+template <int mod>
 struct ModInt {
     int x;
     ModInt() : x(0) {}
-    ModInt(long long x_) { if ((x = x_ % mod + mod) >= mod) x -= mod; }
+    ModInt(long long x_) {
+        if ((x = x_ % mod + mod) >= mod) x -= mod;
+    }
     ModInt &operator+=(ModInt rhs) {
         if ((x += rhs.x) >= mod) x -= mod;
         return *this;
@@ -23,11 +25,11 @@ struct ModInt {
         return *this;
     }
     ModInt &operator*=(ModInt rhs) {
-        x = (unsigned long long) x * rhs.x % mod;
+        x = (unsigned long long)x * rhs.x % mod;
         return *this;
     }
     ModInt &operator/=(ModInt rhs) {
-        x = (unsigned long long) x * rhs.inv().x % mod;
+        x = (unsigned long long)x * rhs.inv().x % mod;
         return *this;
     }
     ModInt operator-() const { return -x < 0 ? mod - x : -x; }

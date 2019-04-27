@@ -1,9 +1,9 @@
 class Dijkstra {
     int n;
-    vector<vector<pair< int, double>>> adj;
+    vector<vector<pair<int, double>>> adj;
     vector<double> d;
 
-public:
+   public:
     Dijkstra(int n) : n(n), adj(n), d(n, numeric_limits<double>::infinity()) {}
 
     void add_edge(int a, int b, double w) {
@@ -19,7 +19,9 @@ public:
 
     void run(int a) {
         d[a] = 0;
-        priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> que;
+        priority_queue<pair<double, int>, vector<pair<double, int>>,
+                       greater<pair<double, int>>>
+            que;
         que.emplace(0, a);
 
         while (que.size()) {
@@ -38,7 +40,5 @@ public:
         }
     }
 
-    double dist(int a) {
-        return d[a];
-    }
+    double dist(int a) { return d[a]; }
 };

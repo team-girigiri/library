@@ -1,6 +1,7 @@
 class xorshift {
     unsigned long long x;
-public:
+
+   public:
     xorshift() {
         mt19937 rnd(chrono::steady_clock::now().time_since_epoch().count());
         x = rnd();
@@ -18,33 +19,23 @@ public:
 using T = long long;
 
 struct MinMonoid {
-    static constexpr T id() {
-        return 2e18;
-    }
+    static constexpr T id() { return 2e18; }
 
-    static T op(T a, T b) {
-        return min(a, b);
-    }
+    static T op(T a, T b) { return min(a, b); }
 };
 
 struct UpdateMonoid {
-    static constexpr T id() {
-        return 2e18;
-    }
+    static constexpr T id() { return 2e18; }
 
-    static T op(T a, T b) {
-        return b;
-    }
+    static T op(T a, T b) { return b; }
 };
 
 struct Modifier {
     // lazyの結果によってaccがどう変わるか。szは部分木のサイズ
-    static T op(T a, T b, int sz) {
-        return (b == UpdateMonoid::id()) ? a : b;
-    }
+    static T op(T a, T b, int sz) { return (b == UpdateMonoid::id()) ? a : b; }
 };
 
-template<class Monoid, class OperatorMonoid>
+template <class Monoid, class OperatorMonoid>
 class ImplicitTreap {
     xorshift rnd;
 
@@ -54,18 +45,22 @@ class ImplicitTreap {
         bool rev;
         Node *l, *r;
 
-        Node(T value, int priority) : value(value), acc(Monoid::id()), lazy(OperatorMonoid::id()), priority(priority), cnt(1), rev(false), l(nullptr), r(nullptr) {}
+        Node(T value, int priority)
+            : value(value),
+              acc(Monoid::id()),
+              lazy(OperatorMonoid::id()),
+              priority(priority),
+              cnt(1),
+              rev(false),
+              l(nullptr),
+              r(nullptr) {}
     } *root = nullptr;
 
     using Tree = Node *;
 
-    int cnt(Tree t) {
-        return t ? t->cnt : 0;
-    }
+    int cnt(Tree t) { return t ? t->cnt : 0; }
 
-    T acc(Tree t) {
-        return t ? t->acc : Monoid::id();
-    }
+    T acc(Tree t) { return t ? t->acc : Monoid::id(); }
 
     void update_cnt(Tree t) {
         if (t) {
@@ -79,9 +74,7 @@ class ImplicitTreap {
         }
     }
 
-    void pushup(Tree t) {
-        update_cnt(t), update_acc(t);
-    }
+    void pushup(Tree t) { update_cnt(t), update_acc(t); }
 
     void pushdown(Tree t) {
         if (t && t->rev) {
@@ -177,13 +170,17 @@ class ImplicitTreap {
                 if (t->l && Monoid::op(t->l->acc, x) != x) {
                     return find(t->l, x, offset, left);
                 } else {
-                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->r, x, offset + cnt(t->l) + 1, left);
+                    return (Monoid::op(t->value, x) != x)
+                               ? offset + cnt(t->l)
+                               : find(t->r, x, offset + cnt(t->l) + 1, left);
                 }
             } else {
                 if (t->r && Monoid::op(t->r->acc, x) != x) {
                     return find(t->r, x, offset + cnt(t->l) + 1, left);
                 } else {
-                    return (Monoid::op(t->value, x) != x) ? offset + cnt(t->l) : find(t->l, x, offset, left);
+                    return (Monoid::op(t->value, x) != x)
+                               ? offset + cnt(t->l)
+                               : find(t->l, x, offset, left);
                 }
             }
         }
@@ -214,33 +211,26 @@ class ImplicitTreap {
         dump(t->r);
     }
 
-public:
+   public:
     ImplicitTreap() {}
 
-    ImplicitTreap(vector <T> as) {
+    ImplicitTreap(vector<T> as) {
         ::reverse(as.begin(), as.end());
         for (T a : as) {
             insert(0, a);
         }
     }
 
-    int size() {
-        return cnt(root);
-    }
+    int size() { return cnt(root); }
 
-    void insert(int pos, T x) {
-        insert(root, pos, new Node(x, rnd.random()));
-    }
+    void insert(int pos, T x) { insert(root, pos, new Node(x, rnd.random())); }
 
-    void update(int l, int r, T x) {
-        update(root, l, r, x);
-    }
+    void update(int l, int r, T x) { update(root, l, r, x); }
 
-    T query(int l, int r) {
-        return query(root, l, r);
-    }
+    T query(int l, int r) { return query(root, l, r); }
 
-    // 二分探索。[l, r)内のkでMonoid::op(tr[k], x) != xとなる最左/最右のもの。存在しない場合は-1
+    // 二分探索。[l, r)内のkでMonoid::op(tr[k], x) !=
+    // xとなる最左/最右のもの。存在しない場合は-1
     // たとえばMinMonoidの場合、x未満の最左/最右の要素の位置を返す
     int binary_search(int l, int r, T x, bool left = true) {
         if (l >= r) return -1;
@@ -253,24 +243,16 @@ public:
         return ret;
     }
 
-    void erase(int pos) {
-        erase(root, pos);
-    }
+    void erase(int pos) { erase(root, pos); }
 
-    void reverse(int l, int r) {
-        reverse(root, l, r);
-    }
+    void reverse(int l, int r) { reverse(root, l, r); }
 
-    void rotate(int l, int m, int r) {
-        rotate(root, l, m, r);
-    }
+    void rotate(int l, int m, int r) { rotate(root, l, m, r); }
 
     void dump() {
         dump(root);
         cout << endl;
     }
 
-    T operator[](int pos) {
-        return query(pos, pos + 1);
-    }
+    T operator[](int pos) { return query(pos, pos + 1); }
 };

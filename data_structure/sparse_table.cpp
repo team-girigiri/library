@@ -1,4 +1,4 @@
-template<typename T>
+template <typename T>
 struct SparseTable {
     vector<vector<T>> st;
     vector<int> lookup;

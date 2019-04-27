@@ -11,13 +11,9 @@ struct UnionFind {
         return par[x] = find(par[x]);
     }
 
-    bool same(int x, int y) {
-        return find(x) == find(y);
-    }
+    bool same(int x, int y) { return find(x) == find(y); }
 
-    int size(int x) {
-        return sz[find(x)];
-    }
+    int size(int x) { return sz[find(x)]; }
 
     void unite(int x, int y) {
         x = find(x), y = find(y);
